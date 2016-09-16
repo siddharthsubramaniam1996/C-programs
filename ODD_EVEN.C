@@ -10,7 +10,7 @@ clrscr();
 
 	if(a==0)
 	{
-		printf("number is neither odd nor even");
+		printf("sid is stupid");
 	}
 	else
 	{
