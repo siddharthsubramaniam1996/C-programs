@@ -1,0 +1,240 @@
+#include<math.h>
+#include<stdio.h>
+#include<conio.h>
+#define MAX 17
+void init(int p[]);
+void read(int p[]);
+void print(int p[]);
+void add(int p1[],int p2[],int p3[]);
+void multiply(int p1[],int p2[],int p3[]);
+
+/*Polynomial is stored in an array, p[i] gives coefficient of x^i .
+  a polynomial 3x^2 + 12x^4 will be represented as (0,0,3,0,12,0,0,....)
+*/
+
+void main()
+{
+ int p1[MAX],p2[MAX],p3[MAX];
+ int option;
+ do
+ {
+  printf("\n\n1 : create 1'st polynomial");
+  printf("\n2 : create 2'nd polynomial");
+  printf("\n3 : Add polynomials");
+  printf("\n4 : Multiply polynomials");
+  printf("\n5 : Quit");
+  printf("\nEnter your choice :");
+  scanf("%d",&option);
+  switch(option)
+  {
+   case 1:read(p1);break;
+   case 2:read(p2);break;
+   case 3:add(p1,p2,p3);
+          printf("\n1'st polynomial -> ");
+          print(p1);
+          printf("\n2'nd polynomial -> ");
+          print(p2);
+          printf("\n Sum = ");
+          print(p3);
+          break;
+   case 4:multiply(p1,p2,p3);
+          printf("\n1'st polynomial -> ");
+          print(p1);
+          printf("\n2'nd polynomial -> ");
+          print(p2);
+          printf("\n Product = ");
+          print(p3);
+          break;
+  }
+ }while(option!=5);
+}
+void read(int p[])
+{
+ int n, i, power,coeff;
+ init(p);
+ printf("\n Enter number of terms :");
+ scanf("%d",&n);
+ /* read n terms */
+ for (i=0;i<n;i++)
+ {       printf("\nenter a term(power  coeff.)");
+  scanf("%d%d",&power,&coeff);
+  p[power]=coeff;
+ }
+}
+void print(int p[])
+{
+ int i;
+ for(i=0;i<MAX;i++)
+  if(p[i]!=0)
+   printf("%dX^%d   ",p[i],i);
+}
+void add(int p1[], int p2[], int p3[])
+{
+    int i;
+    for(i=0;i<MAX;i++)
+ p3[i]=p1[i]+p2[i];
+}
+
+void  multiply(int p1[], int p2[], int p3[])
+{
+ int i,j;
+ init(p3);
+ for(i=0;i<MAX;i++)
+  for(j=0;j<MAX;j++)
+      p3[i+j]=p3[i+j]+p1[i]*p2[j];
+}
+void init(int p[])
+{
+    int i;
+    for(i=0;i<MAX;i++)
+ p[i]=0;
+}
+
+===========================================================================
+
+Evaluate Polynomial
+
+#include <stdio.h>
+#include <stdlib.h>
+#define MAXSIZE 10
+ 
+void main()
+{
+    int array[MAXSIZE];
+    int i, num, power;
+    float x, polySum;
+ 
+    printf("Enter the order of the polynomial \n");
+    scanf("%d", &num);
+    printf("Enter the value of x \n");
+    scanf("%f", &x);
+    /*  Read the coefficients into an array */
+    printf("Enter %d coefficients \n", num + 1);
+    for (i = 0; i <= num; i++)
+    {
+        scanf("%d", &array[i]);
+    }
+    polySum = array[0];
+    for (i = 1; i <= num; i++)
+    {
+        polySum = polySum * x + array[i];
+    }
+    power = num;
+ 
+    printf("Given polynomial is: \n");
+    for (i = 0; i <= num; i++)
+    {
+        if (power < 0)
+        {
+            break;
+        }
+        /*  printing proper polynomial function */
+        if (array[i] > 0)
+            printf(" + ");
+        else if (array[i] < 0)
+            printf(" - ");
+        else
+            printf(" ");
+        printf("%dx^%d  ", abs(array[i]), power--);
+    }
+    printf("\n Sum of the polynomial = %6.2f \n", polySum);
+}
+
+
+
+===================================================================================
+
+
+
+#include<stdio.h>
+
+void DFS(int);
+int G[10][10],visited[10],n;    //n is no of vertices and graph is sorted in array G[10][10]
+
+void main()
+{
+    int i,j;
+    printf("Enter number of vertices:");
+    scanf("%d",&n);
+
+    //read the adjecency matrix
+    printf("\nEnter adjecency matrix of the graph:");
+    for(i=0;i<n;i++)
+        for(j=0;j<n;j++)
+            scanf("%d",&G[i][j]);
+
+    //visited is initialized to zero
+    for(i=0;i<n;i++)
+        visited[i]=0;
+
+    DFS(0);
+}
+
+void DFS(int i)
+{
+    int j;
+    printf("\n%d",i);
+    visited[i]=1;
+    for(j=0;j<n;j++)
+        if(!visited[j]&&G[i][j]==1)
+            DFS(j);
+}
+
+
+=====================================================
+
+Write a program to perform following operation on Circular Doubly Linklist.
+
+i)Create
+ii)Display
+
+Sol.
+
+#include<stdio.h>
+#include<conio.h>
+
+struct node
+{
+	int info;
+	struct node *prev,*next;
+}*start,*last;
+
+
+void create(int data)
+{
+	struct node *temp;
+	temp=malloc(sizeof(struct node));
+	temp->info=data;
+	if (start==NULL)
+	{
+		start=temp;
+		last=temp;
+		start->prev=temp;
+		start->next=temp;
+	}
+	else
+	{
+		temp->prev=last;
+		last->next=temp;
+		last=temp;
+		start->prev=last;
+		last->next=start;
+	}
+}
+
+void display()
+{
+	struct node *q;
+	if(start==NULL)
+	printf("List is Empty");
+	else
+	{
+		q=start;
+		while(q!=last)
+		{
+			printf("%d",q->info);
+			q=q->next;
+		}
+		printf("%d",last->info);
+	}
+}
